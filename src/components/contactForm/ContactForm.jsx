@@ -9,16 +9,16 @@ export class ContactForm extends Component {
     number: '',
   };
 
-  handleSubmit = e => {
-    e.prevenetDefault();
-    const form = e.target;
-    this.props.handleSubmit(this.state);
-    form.reset();
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   };
 
-  handleChange = e => {
-    const { name, value } = e.currentTarget;
-    this.setState({ [name]: value });
+  handleSubmit = e => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    this.props.handleSubmit(this.state);
+    form.reset();
   };
 
   render() {
