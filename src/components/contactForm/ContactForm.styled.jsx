@@ -6,7 +6,7 @@ export const Form = styled.form`
 `;
 
 export const Label = styled.label`
-  font-size: 20px;
+  font-size: 24px;
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;

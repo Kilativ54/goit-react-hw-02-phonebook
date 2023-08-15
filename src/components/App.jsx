@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid'
 
 import {Container} from "./App.styled";
 import {ContactForm} from "./contactForm/ContactForm";
+import {ContactList} from "./contactList/contactList";
 
 
 export class App extends Component {
@@ -33,11 +34,33 @@ if(contactsList.findIndex(contact=> name === contact.name) !== -1){
 this.setState({contacts : contactsList});
   };
 
+  handleDelete = e =>{
+    this.setState(prevState=>({contacts: prevState.contacts.filter(contact=>contact.id !== e)}))
+      };
+
+  getFilteredContacts = () =>{
+    const filterContactsList = this.state.contacts.filter(contact=>{
+      return contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
+    } );
+    return filterContactsList;
+  };
+
+  handleChange =(e) =>{
+const {name, value} = e.target;
+this.setState({[name]:value})
+  };
+
+
+
   render()
 {  return (
    <Container>
     <h1>Phonebook</h1>
-    <ContactForm/>
+    <ContactForm handleSubmit={this.handleSubmit}  />
+    <h2> Contacts</h2>
+    <ContactList
+          contacts={this.getFilteredContacts()}
+          handleDelete={this.handleDelete}/>
    </Container>
   );}
 };
