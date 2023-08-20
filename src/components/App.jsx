@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { nanoid } from 'nanoid';
 
 import { Container } from './App.styled';
 import { ContactForm } from './contactForm/ContactForm';
@@ -15,26 +14,25 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
-  handleSubmit = e => {
-    const id = nanoid();
-    const name = e.name;
-    const number = e.number;
-    const contactsList = [...this.state.contacts];
-    if (contactsList.findIndex(contact => name === contact.name) !== -1) {
-      alert(`${name} is already in contacts.`);
-    } else {
-      contactsList.push({ id, name, number });
+  handleSubmit = contactItem => {
+    const { name } = contactItem;
+    let checkContact = this.state.contacts.find(
+      contact => contact.name === name
+    );
+
+    if (checkContact) {
+      return alert(`${name} is already in contacts.`);
     }
-    this.setState({ contacts: contactsList });
+    this.setState(prevState => ({
+      contacts: [contactItem, ...prevState.contacts],
+    }));
   };
 
-  handleDelete = e => {
+  handleDelete = id => {
     this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== e),
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
   };
 
